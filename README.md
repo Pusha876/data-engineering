@@ -1,52 +1,15 @@
-# data-engineering
-docker-workshop
+# Data Engineering
 
-## Mount folders/files into a Docker container (Windows)
+**A hands-on, container-first data engineering sandbox** for running a small Python pipeline with `uv`, Parquet output, and reproducible Docker workflows.
 
-Use bind mounts with `-v <host_path>:<container_path>`.
+## What This Repo Demonstrates
 
-### 1) Mount a folder (Git Bash)
+- Local execution in a project-scoped virtual environment (`pipeline/.venv`) using `uv`.
+- Containerized pipeline runs with explicit, repeatable Docker commands.
+- Practical Windows mount patterns for files and folders when working with Docker.
 
-```bash
-cd /c/WORKSPACE/data-engineering
-docker run --rm -it -v "$(pwd -W)/test:/app/test" ubuntu bash
-```
+## Start Here
 
-Verify inside container:
-
-```bash
-ls -la /app/test
-```
-
-### 2) Mount a folder (PowerShell)
-
-```powershell
-cd C:\WORKSPACE\data-engineering
-docker run --rm -it -v "${PWD}\test:/app/test" ubuntu bash
-```
-
-### 3) Mount a single file
-
-Git Bash:
-
-```bash
-docker run --rm -it -v "$(pwd -W)/test/script.py:/app/script.py" ubuntu bash
-```
-
-PowerShell:
-
-```powershell
-docker run --rm -it -v "${PWD}\test\script.py:/app/script.py" ubuntu bash
-```
-
-Verify file inside container:
-
-```bash
-ls -la /app/script.py
-```
-
-## Common mistakes
-
-- Missing leading `/` on container path (use `/app/test`, not `app/test`).
-- Using backslashes for container path (always use `/` in container paths).
-- In Git Bash, prefer `$(pwd -W)` for host paths.
+- Pipeline setup and run commands: `pipeline/README.md`
+- Script entrypoint: `pipeline/pipeline.py`
+- Container setup: `pipeline/Dockerfile`
