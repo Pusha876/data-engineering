@@ -97,3 +97,8 @@ ls -la /app/script.py
 - Missing leading `/` on container path (use `/app/test`, not `app/test`).
 - Using backslashes for container path (always use `/` in container paths).
 - In Git Bash, prefer `$(pwd -W)` for host paths.
+
+### Named Volume vs Bind Mount
+
+- Named volume (`name:/path`): Managed by Docker, easier.
+- Bind mount (`/host/path:/container/path`): Direct mapping to host filesystem, more control.
