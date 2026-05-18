@@ -1,10 +1,14 @@
-FROM python:3.9-slim
+FROM python:3.12-slim
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/
 
-RUN uv pip install --system pandas pyarrow fastparquet
-
 WORKDIR /code
-COPY pipeline.py /code/pipeline.py
+ENV PATH="/code/.venv/bin:$PATH"
+
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev
+
+COPY pipeline.py ./
 
 
-ENTRYPOINT ["uv", "run", "pipeline.py"]
+ENTRYPOINT ["python", "pipeline.py"]
+CMD ["12"]
