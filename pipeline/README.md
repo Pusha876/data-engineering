@@ -21,6 +21,61 @@
 	.venv/Scripts/python.exe -m pip list
 	```
 
+## Ingest Script CLI Help and Examples
+
+The ingestion script now uses Click-based CLI options.
+
+1. Show all available options.
+
+	```bash
+	cd /c/WORKSPACE/data-engineering/pipeline
+	uv run --active python ingest_data.py --help
+	```
+
+2. Run with defaults (matches local Postgres defaults).
+
+	```bash
+	uv run --active python ingest_data.py
+	```
+
+3. Ingest a different month/year into a custom table.
+
+	```bash
+	uv run --active python ingest_data.py \
+	  --year 2021 \
+	  --month 2 \
+	  --target-table yellow_taxi_2021_02
+	```
+
+4. Override database connection settings.
+
+	```bash
+	uv run --active python ingest_data.py \
+	  --pg-user root \
+	  --pg-pass root \
+	  --pg-host localhost \
+	  --pg-port 5432 \
+	  --pg-db ny_taxi
+	```
+
+5. Tune chunk size for faster/slower writes.
+
+	```bash
+	uv run --active python ingest_data.py --chunk-size 50000
+	```
+
+Main options:
+
+- `--pg-user`
+- `--pg-pass`
+- `--pg-host`
+- `--pg-port`
+- `--pg-db`
+- `--year`
+- `--month`
+- `--target-table`
+- `--chunk-size`
+
 ## Build and Run with Docker
 
 1. Build from the repository root using the pipeline directory as context.

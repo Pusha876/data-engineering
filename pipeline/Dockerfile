@@ -7,8 +7,8 @@ ENV PATH="/code/.venv/bin:$PATH"
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-dev
 
-COPY pipeline.py ./
+COPY ingest_data.py ./
 
 
-ENTRYPOINT ["python", "pipeline.py"]
+ENTRYPOINT ["python", "ingest_data.py"]
 CMD ["12"]
