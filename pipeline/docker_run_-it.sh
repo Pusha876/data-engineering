@@ -19,7 +19,7 @@ docker run -it \
 
 
 docker run -d \
-  --network=pg-network \
+  --network=pipeline_pg-network \
   taxi_ingest:v001 \
   --pg-user=root \
   --pg-pass=root \
@@ -28,3 +28,12 @@ docker run -d \
   --pg-db=ny_taxi \
   --target-table=yellow_taxi_trips_2021_1 \
   --chunk-size=100000
+
+
+  uv run python ingest_data.py \
+  --pg-user=root \
+  --pg-pass=root \
+  --pg-host=localhost \
+  --pg-port=5432 \
+  --pg-db=ny_taxi \
+  --target-table=yellow_taxi_trips_2021_1 \

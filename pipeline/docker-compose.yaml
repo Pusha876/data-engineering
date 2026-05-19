@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   postgres:
     image: postgres:18
@@ -12,7 +10,8 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ny_taxi_postgres_data:/var/lib/postgresql/data
+      # Postgres 18+ expects the parent directory to be mounted.
+      - ny_taxi_postgres_data:/var/lib/postgresql
     networks:
       - pg-network
 
