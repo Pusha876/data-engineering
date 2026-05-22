@@ -84,3 +84,42 @@ WHERE lpep_pickup_datetime >= '2020-11-01'
 15612
 
 ![SQL query result](SQY Query.png)
+
+## Question 4. Longest trip for each day
+
+Which was the pickup day with the longest trip distance? Only consider trips with `trip_distance` less than 100 miles (to exclude data errors).
+
+### Result
+
+pickup_day            longest_trip_distance
+2020-11-25            92.99
+
+![SQL query result - longest distance](SQL Query - Distance.png)
+
+
+## Question 5. Biggest pickup zone
+
+Which was the pickup zone with the largest total_amount (sum of all trips) on `November 18th, 2025`?
+
+Note: the loaded dataset is November 2020, so the query below is adjusted to match the actual loaded period.
+
+### Result
+
+pickup zone                total_amount_sum
+East Harlem South          5345.770000000009
+
+![SQL query result - biggest pickup zone](SQL Query - Zone.png)
+
+
+## Question 6. Largest tip
+
+For the passengers picked up in the zone named "East Harlem North" in November 2025, which was the drop off zone that had the largest tip?
+
+Note: it is tip, not trip. We need the zone name, not the ID.
+
+Note: the loaded dataset is November 2020, so the query below is adjusted to match the actual loaded period.
+
+### Result
+
+drop_off_zone            total_tip_amount
+East Harlem South        1335.9300000000003
