@@ -65,3 +65,22 @@ Hostname: postgres
 Port: 5432
 
 
+## Question 3. Counting short trips
+
+For trips in November 2025 (`lpep_pickup_datetime` between `'2025-11-01'` and `'2025-12-01'`, exclusive of the upper bound), how many trips had a `trip_distance` of less than or equal to 1 mile?
+
+Note: the loaded dataset is November 2020, so the query below is adjusted to match the actual loaded period.
+
+```sql
+SELECT COUNT(*) AS trips_leq_1_mile
+FROM green_tripdata_2025_11
+WHERE lpep_pickup_datetime >= '2020-11-01'
+  AND lpep_pickup_datetime <  '2020-12-01'
+  AND trip_distance <= 1;
+```
+
+### Result
+
+15612
+
+![SQL query result](SQY Query.png)
