@@ -20,7 +20,8 @@ Run Docker with the `python:3.13` image and use a Bash entrypoint to interact wi
 
 What is the `pip` version in the image?
 
-![Python version](Python version.png)
+![alt text](<../assets/Python version.png>)
+
 
 ## Question 2. Understanding Docker Networking and Docker Compose
 
@@ -83,7 +84,8 @@ WHERE lpep_pickup_datetime >= '2020-11-01'
 
 15612
 
-![SQL query result](SQY Query.png)
+![alt text](<../assets/SQY Query.png>)
+
 
 ## Question 4. Longest trip for each day
 
@@ -94,7 +96,7 @@ Which was the pickup day with the longest trip distance? Only consider trips wit
 pickup_day            longest_trip_distance
 2020-11-25            92.99
 
-![SQL query result - longest distance](SQL Query - Distance.png)
+![alt text](<../assets/SQL Query - Distance.png>)
 
 
 ## Question 5. Biggest pickup zone
@@ -108,7 +110,8 @@ Note: the loaded dataset is November 2020, so the query below is adjusted to mat
 pickup zone                total_amount_sum
 East Harlem South          5345.770000000009
 
-![SQL query result - biggest pickup zone](SQL Query - Zone.png)
+
+![alt text](<../assets/SQL Query - Zone.png>)
 
 
 ## Question 6. Largest tip
