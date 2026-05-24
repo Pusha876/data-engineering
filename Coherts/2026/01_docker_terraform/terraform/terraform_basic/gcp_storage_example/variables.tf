@@ -21,3 +21,10 @@ variable "bucket_prefix" {
   type        = string
   default     = "homework-pipeline"
 }
+
+variable "dataset_id" {
+  description = "BigQuery dataset ID"
+  type        = string
+  default     = "homework_dataset"
+}
+
