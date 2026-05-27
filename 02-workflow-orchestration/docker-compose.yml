@@ -85,6 +85,9 @@ services:
     ports:
       - "8080:8080"
       - "8081:8081"
+    networks:
+      - default
+      - pg-network
     depends_on:
       kestra_postgres:
         condition: service_started
