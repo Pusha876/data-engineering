@@ -30,3 +30,32 @@ docker rm -f pg-database
 ```
 
 In general, avoid `container_name` unless you truly need a fixed global name.
+
+## Next step Summary (2026-05-27)
+
+Today we debugged and fixed the Postgres connectivity issues for the taxi ingestion flows.
+
+### What we changed
+
+- Updated JDBC host in both Kestra Postgres flows from `pgdatabase` to `postgres`:
+	- `Flow/04_postgres_taxi.yaml`
+	- `Flow/05_postgres_taxi_scheduled.yaml`
+- Updated `docker-compose.yml` so the `kestra` service joins both networks:
+	- `default` (for `kestra_postgres`)
+	- `pg-network` (for app `postgres`)
+
+### Why this was needed
+
+- Error root cause was network/DNS resolution (`UnknownHostException`), not a missing green table.
+- The flows already contain `CREATE TABLE IF NOT EXISTS` for green taxi and will create target tables during execution.
+
+### Notes about green taxi ingestion
+
+- Green ingestion is supported by the Kestra flow input (`taxi=green`).
+- Flow target table naming is based on `public.{{inputs.taxi}}_tripdata` by default.
+- The standalone ingest container is not required to fix this Kestra connectivity issue.
+
+### Operational reminders
+
+- After flow YAML changes, ensure the running flow definition in Kestra UI is updated/re-imported.
+- Recreate/restart services after compose networking changes so containers pick up new network attachments.
