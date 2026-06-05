@@ -49,6 +49,12 @@ tasks:
     type: io.kestra.plugin.gcp.gcs.Upload
     from: "{{render(vars.data)}}"
     to: "{{render(vars.gcs_file)}}"
+    timeout: PT20M
+    retry:
+      type: constant
+      interval: PT30S
+      maxAttempt: 4
+      warningOnRetry: true
 
   - id: if_yellow_taxi
     type: io.kestra.plugin.core.flow.If
