@@ -4,17 +4,37 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from google.cloud import storage
 from google.api_core.exceptions import NotFound, Forbidden
+from google.auth.exceptions import DefaultCredentialsError
 import time
 
 
 # Change this to your bucket name
-BUCKET_NAME = "pushtech_bootcamp_hw3_2026"
+BUCKET_NAME = os.getenv("BUCKET_NAME", "pushtech_bootcamp_hw3_2026")
 
-# If you authenticated through the GCP SDK you can comment out these two lines
-CREDENTIALS_FILE = "gcs.json"
-client = storage.Client.from_service_account_json(CREDENTIALS_FILE)
-# If commented initialize client with the following
-# client = storage.Client(project='zoomcamp-mod3-datawarehouse')
+CREDENTIALS_FILE = os.getenv("GOOGLE_APPLICATION_CREDENTIALS", "gcs.json")
+
+
+def init_storage_client():
+    if os.path.isfile(CREDENTIALS_FILE):
+        print(f"Using service account credentials from {CREDENTIALS_FILE}")
+        return storage.Client.from_service_account_json(CREDENTIALS_FILE)
+
+    try:
+        print(
+            "No local credentials file found. Falling back to "
+            "Application Default Credentials (ADC)."
+        )
+        return storage.Client()
+    except DefaultCredentialsError:
+        print(
+            "No Google Cloud credentials found. Either set "
+            "GOOGLE_APPLICATION_CREDENTIALS to a service account JSON path "
+            "or run: gcloud auth application-default login"
+        )
+        sys.exit(1)
+
+
+client = init_storage_client()
 
 
 BASE_URL = (
@@ -49,27 +69,12 @@ def download_file(month):
 
 def create_bucket(bucket_name):
     try:
-        # Check if the bucket belongs to the current project
-        project_bucket_ids = [bckt.id for bckt in client.list_buckets()]
-        if bucket_name in project_bucket_ids:
-            print(
-                f"Bucket '{bucket_name}' exists and belongs to your "
-                f"project. Proceeding..."
-            )
-        else:
-            print(
-                f"A bucket with the name '{bucket_name}' already exists, "
-                f"but it does not belong to your project."
-            )
-            sys.exit(1)
-
+        client.get_bucket(bucket_name)
+        print(f"Bucket '{bucket_name}' already exists and is accessible.")
     except NotFound:
-        # If the bucket doesn't exist, create it
         client.create_bucket(bucket_name)
         print(f"Created bucket '{bucket_name}'")
     except Forbidden:
-        # If the request is forbidden, it means the bucket exists but
-        # you don't have access to see details
         print(
             f"A bucket with the name '{bucket_name}' exists, but it is "
             f"not accessible. Bucket name is taken. Please try a "
