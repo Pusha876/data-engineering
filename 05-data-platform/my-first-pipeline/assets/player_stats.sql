@@ -35,4 +35,5 @@ custom_checks:
 
 SELECT name, count(*) AS player_count
 FROM dataset.players
+WHERE name IS NOT NULL
 GROUP BY 1
