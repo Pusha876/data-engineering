@@ -86,3 +86,43 @@ Docker Compose lets you define a multi-container application in one YAML file (`
 - Ingest script: `pipeline/ingest_data.py`
 - Compose stack: `pipeline/docker-compose.yaml`
 - Container setup: `pipeline/Dockerfile`
+
+---
+
+## Bruin Setup and Validation (05-data-platform)
+
+If you are working on the sample Bruin project at `05-data-platform/my-first-pipeline`, use the steps below.
+
+### 1) Open the project folder
+
+```bash
+cd "C:/WORKSPACE/data-engineering/05-data-platform/my-first-pipeline"
+```
+
+### 2) Verify Bruin CLI is available
+
+```bash
+bruin --version
+```
+
+If this fails, install Bruin CLI first and re-open your shell.
+
+### 3) Validate the pipeline (correct command)
+
+```bash
+bruin validate .
+```
+
+This validates the pipeline in the current directory.
+
+### 5) Optional: validate with explicit environment
+
+```bash
+bruin validate --environment default .
+```
+
+### 6) Optional: run pipeline
+
+```bash
+bruin run .
+```
