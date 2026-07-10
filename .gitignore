@@ -221,3 +221,7 @@ __marimo__/
 .streamlit/secrets.toml
 
 .bruin.yml
+logs/runs
+logs/*.log
+*.py[cod]
+duckdb.db
