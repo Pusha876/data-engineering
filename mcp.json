@@ -1,0 +1,10 @@
+{
+	"servers": {
+		"bruin mcp": {
+			"type": "stdio",
+			"command": "bruin",
+			"args": ["mcp"]
+		}
+	},
+	"inputs": []
+}
