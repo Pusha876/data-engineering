@@ -27,11 +27,14 @@ import requests
 
 
 BASE_URL = "https://d37ci6vzurychx.cloudfront.net/trip-data"
+LATEST_AVAILABLE_MONTH = datetime(2025, 11, 1)
 
 
 def _parse_bruin_date(value: str) -> datetime:
     """Parse Bruin date strings, including ISO timestamps with a trailing Z."""
-    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    return datetime.fromisoformat(value.replace("Z", "+00:00")).replace(
+      tzinfo=None
+    )
 
 
 def _iter_month_starts(start_date: datetime, end_date: datetime):
@@ -95,6 +98,15 @@ def materialize():
     end_date = _parse_bruin_date(os.environ["BRUIN_END_DATE"])
     taxi_types = json.loads(
       os.environ["BRUIN_VARS"]).get("taxi_types", ["yellow"])
+
+    if start_date > LATEST_AVAILABLE_MONTH:
+        raise ValueError(
+          "NYC TLC trip data is only available through 2025-11. "
+          "Adjust BRUIN_START_DATE / BRUIN_END_DATE to an earlier month."
+        )
+
+    if end_date > LATEST_AVAILABLE_MONTH:
+        end_date = LATEST_AVAILABLE_MONTH
 
     frames = []
 
