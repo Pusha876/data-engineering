@@ -225,3 +225,7 @@ logs/runs
 logs/*.log
 *.py[cod]
 duckdb.db
+logs/queries
+
+# GCP service account key
+kestra-sandbox-497720-a17acecd85b4.json
